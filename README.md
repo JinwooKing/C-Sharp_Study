@@ -1,7 +1,7 @@
 # ConsoleAppSample
 
-## programmers https://programmers.co.kr/
-프로그래머스 문제 정리
+## programmers
+프로그래머스 문제
 
 ## study 
-개인 공부 정리
+개인 공부
