@@ -6,30 +6,34 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSample.study
 {
-    internal class DirectoryClass
+    class DirectoryClass
     {
         //Directory 클래스
         //디렉터리 및 하위 디렉터리를 만들고, 이동하고, 열거하는 정적 메서드를 노출합니다.
 
         //DirectoryInfo 클래스
         //디렉터리 및 하위 디렉터리를 만들고, 이동하고, 열거하는 인스턴스 메서드를 노출합니다.
-        public string CurrentDirectory { get; set; }
-
-        public DirectoryClass()
+        
+        /// <summary>
+        /// 현재 디렉토리 경로
+        /// </summary>
+        void GetCurrentDirectory()
         {
+            string CurrentDirectory = String.Empty;
+
             //현재 Directory 경로
             CurrentDirectory = Directory.GetCurrentDirectory();
             Console.WriteLine(CurrentDirectory);
         }
 
-        DirectoryInfo target = new DirectoryInfo(@"C:\target");
-
         /// <summary>
-        /// 폴더에 일정기간이 지난 파일 삭제
+        /// 일정기간이 지난 파일 삭제
         /// </summary>
         /// <param name="di"></param>
-        public void DeleteFile(DirectoryInfo di)
+        public void DeleteFile()
         {
+            DirectoryInfo di = new DirectoryInfo(@"C:\target");
+
             try
             {
                 //타겟 경로에 파일들이 존재한다면
@@ -58,6 +62,36 @@ namespace ConsoleAppSample.study
             catch (Exception ex)
             {
                 Console.WriteLine($"[DelFile] {ex.ToString()}");
+            }
+        }
+
+        /// <summary>
+        /// 폴더에 있는 파일 이동
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destPath"></param>
+        public static void FileSync(string sourcePath, string destPath)
+        {
+
+            DirectoryInfo sourceDi = new DirectoryInfo(sourcePath);
+            DirectoryInfo destDi = new DirectoryInfo(destPath);
+
+            FileInfo[] sourceFiles = sourceDi.GetFiles();
+
+            foreach (FileInfo sourceFile in sourceFiles)
+            {
+                string sourceFileName = sourceFile.FullName;
+                string destFileName = Path.Combine(destPath, sourceFile.Name);
+
+                int i = 0;
+                if (File.Exists(destFileName))
+                {
+                    while (File.Exists(destFileName + $" ({++i})")) ;
+                    destFileName = destFileName + $" ({i})";
+                }
+
+                File.Copy(sourceFileName, destFileName);
+                File.Delete(sourceFileName);
             }
         }
     }

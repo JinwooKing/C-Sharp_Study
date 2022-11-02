@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSample.programmers.myfolder
+namespace ConsoleAppSample.study
 {
-    internal class MathCls
+    class MathCls
     {
+
     }
 }

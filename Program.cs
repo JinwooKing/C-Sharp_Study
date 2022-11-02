@@ -1,3 +1,5 @@
-﻿using ConsoleAppSample;
+﻿using ConsoleAppSample.Model.Helper;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Hello");
+
+IniHelper tt = new IniHelper();

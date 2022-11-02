@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSample.programmers.skill_checks
 {
-    internal class starter
+    class starter
     {
         //프로그래머스 스킬체크 "입문자"
         //https://programmers.co.kr/skill_checks
