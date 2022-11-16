@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSample.study
 {
-    class EnumerableCls
+    public class EnumerableCls
     {
         //Enumerable 클래스
         //IEnumerable<T> 을 구현하는 개체를 쿼리하기 위한 정적 (Visual Basic의 경우 Shared) 메서드 집합을 제공합니다.

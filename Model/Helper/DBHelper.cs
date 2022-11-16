@@ -12,7 +12,10 @@ namespace ConsoleAppSample.Model.Helper
             SqlServerConnectionTest();
         }
 
-        void SqlServerConnectionTest()
+        /// <summary>
+        /// SQL Server 데이터베이스
+        /// </summary>
+        public static void SqlServerConnectionTest()
         {
             //0. 접속정보
             string SERVER = "000.000.000.000";
@@ -45,7 +48,10 @@ namespace ConsoleAppSample.Model.Helper
             }
         }
 
-        void OracleConnectionTest()
+        /// <summary>
+        /// Oracle 데이터베이스
+        /// </summary>
+        public static void OracleConnectionTest()
         {
             string ConnectionString = @"Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = {000.000.000.000})(PORT = {1521}))) 
                                                         (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = xe))); User Id={UserId};Password={Password};";

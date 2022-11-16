@@ -6,20 +6,26 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSample.study
 {
-    class DirectoryClass
+    public class DirectoryClass
     {
         //Directory 클래스
         //디렉터리 및 하위 디렉터리를 만들고, 이동하고, 열거하는 정적 메서드를 노출합니다.
+        //https://learn.microsoft.com/ko-kr/dotnet/api/system.io.directory
 
         //DirectoryInfo 클래스
         //디렉터리 및 하위 디렉터리를 만들고, 이동하고, 열거하는 인스턴스 메서드를 노출합니다.
-        
+        //https://learn.microsoft.com/ko-kr/dotnet/api/system.io.directoryinfo
+
         /// <summary>
         /// 현재 디렉토리 경로
         /// </summary>
-        void GetCurrentDirectory()
+        public void GetCurrentDirectory()
         {
             string CurrentDirectory = String.Empty;
+
+            //웹 애플리케이션
+            //using System.Web;
+            //HttpContext.Current.Server.MapPath("/");
 
             //현재 Directory 경로
             CurrentDirectory = Directory.GetCurrentDirectory();

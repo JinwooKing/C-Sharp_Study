@@ -10,7 +10,7 @@ namespace ConsoleAppSample.Model.Helper
     public class IniHelper
     {
         static string currentPath = Directory.GetCurrentDirectory();
-        static string filePath = Path.Combine(currentPath, "info.ini");
+        static string filePath = Path.Combine(currentPath, "ConfigEx.ini");
 
         static StringBuilder SERVER = new StringBuilder();
         static StringBuilder DATABASE = new StringBuilder();

@@ -1,5 +1,6 @@
 ﻿using ConsoleAppSample.Model.Helper;
+using ConsoleAppSample.Study;
 
-Console.WriteLine("Hello");
+JsonHelper.ReadJsonFileAndWriteJsonFile(@"D:\023.kepri\kepri\current.json");
 
-IniHelper tt = new IniHelper();
+Console.ReadKey();

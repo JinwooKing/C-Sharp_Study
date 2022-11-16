@@ -70,5 +70,128 @@ namespace ConsoleAppSample.programmers.all_problems
             }
             return answer;
         }
+
+        /// <summary>
+        /// 숨어있는 숫자의 덧셈 (1)
+        /// 문자열 my_string이 매개변수로 주어집니다. my_string안의 모든 자연수들의 합을 return하도록 solution 함수를 완성해주세요.
+        /// </summary>
+        /// <param name="my_string"></param>
+        /// <returns></returns>
+        int solution4(string my_string)
+        {
+            int answer = 0;
+            foreach (char c in my_string)
+            {
+                if (int.TryParse(c.ToString(), out int t))
+                    answer += t;
+            }
+            return answer;
+        }
+
+        /// <summary>
+        /// 모스부호 (1)
+        ///  문자열 letter가 매개변수로 주어질 때, letter를 영어 소문자로 바꾼 문자열을 return 하도록 solution 함수를 완성해보세요. 
+        /// </summary>
+        /// <param name="letter"></param>
+        /// <returns></returns>
+        string solution5(string letter)
+        {
+            string[] mos = new string[] { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.." };
+            string answer = "";
+
+            foreach (string s in letter.Split(" "))
+            {
+                answer += Convert.ToChar(Array.IndexOf(mos, s) + 97);
+            }
+
+            return answer;
+        }
+
+        /// <summary>
+        /// 구슬을 나누는 경우의 수
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="m"></param>
+        /// <returns></returns>
+    public int solution6(int n, int m)
+        {
+            if (m >= n / 2)
+            {
+                m = n - m;
+            }
+            long answer = GetFactorial(n, m);
+            return (Int32)answer;
+        }
+
+        long GetFactorial(int n, int m)
+        {
+            if (n == m)
+                return 1;
+
+            long t = 1;
+            long b = 1;
+            long b2 = 1;
+            for (int i = 2; i <= n; i++)
+            {
+                t = t * i;
+
+                if (i <= (n - m))
+                    b = b * i;
+
+                if (i <= m)
+                    b2 = b2 * i;
+
+                if (t % b == 0 && b > 1)
+                {
+                    t = t / b;
+                    b = 1;
+                }
+
+                if (t % b2 == 0 && b2 > 1)
+                {
+                    t = t / b2;
+                    b2 = 1;
+                }
+
+                long gcd = 0;
+
+                if (b > b2)
+                {
+                    gcd = Getgcd(t, b);
+                    t = t / gcd;
+                    b = b / gcd;
+                }
+                else
+                {
+                    gcd = Getgcd(t, b2);
+                    t = t / gcd;
+                    b2 = b2 / gcd;
+                }
+            }
+
+            t = t / (b * b2);
+            return t;
+        }
+
+        long Getgcd(long m, long n)
+        {
+            long b = 0;
+            long s = 0;
+            if (m > n)
+            {
+                b = m;
+                s = n;
+            }
+            else
+            {
+                b = n;
+                s = m;
+            }
+
+            if (b % s == 0)
+                return s;
+            else
+                return Getgcd(s, b % s);
+        }
     }
 }
