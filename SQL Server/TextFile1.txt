@@ -1,0 +1,35 @@
+﻿-- OPENROWSET(BULK) --
+-- 로컬 드라이브 또는 네트워크에 있는 모든 파일에서 데이터를 읽을 수 있는 테이블 반환 함수입니다. 파일의 콘텐츠를 포함하는 단일 열로 된 테이블을 반환합니다.
+
+--1. JSON 파일의 콘텐츠를 읽고 BulkColumn 단일 값으로 반환
+SELECT BulkColumn
+ FROM OPENROWSET (BULK 'C:\current.json', SINGLE_CLOB) as j;
+
+--2. JSON 파일의 콘텐츠를 로드한 후 JSON 텍스트를 테이블에 저장
+SELECT BulkColumn
+ INTO #temp
+FROM OPENROWSET (BULK 'C:\current.json', SINGLE_CLOB) as j
+
+-- OPENJSON() -- 
+-- OPENJSON은 BulkColumn 배열에서 각 행에 하나의 JSON 개체를 반환합니다. 
+--3. 단일 값으로 전체 JSON 파일을 읽지 않고 파일 구문을 분석하여 행과 열에 반환
+SELECT value
+ FROM OPENROWSET (BULK 'C:\current.json', SINGLE_CLOB) as j
+ CROSS APPLY OPENJSON(BulkColumn)
+
+-- OPENROWSET(BULK)는 파일 콘텐츠를 읽고 그 콘텐츠를 출력에 대해 정의된 스키마로 OPENJSON 함수에 전달합니다. OPENJSON은 열 이름을 사용하여 JSON 개체의 속성을 찾습니다. 
+--4. 로드된 JSON을 구문 분석하여 필드를 열로 반환합니다.
+SELECT Tags.*
+FROM OPENROWSET (BULK 'C:\current.json', SINGLE_CLOB) as j
+ CROSS APPLY OPENJSON(BulkColumn)
+WITH(Val nvarchar(30), SensorType nvarchar(10), std_tag nvarchar(50), OriTime DateTime, ColTime DateTime, Qual nvarchar(10), org_tag nvarchar(50), PlantCode nvarchar(50)) AS Tags
+
+--5. Json 파일의 컨텐츠를 테이블에 저장
+SELECT Tags.*
+INTO Tags
+FROM OPENROWSET (BULK 'C:\current.json', SINGLE_CLOB) as j
+ CROSS APPLY OPENJSON(BulkColumn)
+WITH(Val nvarchar(30), SensorType nvarchar(10), std_tag nvarchar(50), OriTime DateTime, ColTime DateTime, Qual nvarchar(10), org_tag nvarchar(50), PlantCode nvarchar(50)) AS Tags
+
+--6. 데이터 확인
+SELECT * FROM Tags

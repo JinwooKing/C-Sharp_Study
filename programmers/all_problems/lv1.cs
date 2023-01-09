@@ -124,7 +124,7 @@ namespace ConsoleAppSample.Programmers.all_problems
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        public long solution(long n)
+        public long solution6(long n)
         {
             long answer = 0;
 

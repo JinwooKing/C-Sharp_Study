@@ -22,10 +22,10 @@ namespace ConsoleAppSample.Model.Helper
         { // GetPrivateProfileString("카테고리", "Key값", "기본값", "저장할 변수", "불러올 경로");
             if(!File.Exists(filePath))
                 File.Create(filePath);
-            WritePrivateProfileString("SQL", "server", "", filePath);
-            WritePrivateProfileString("SQL", "database", "", filePath);
-            WritePrivateProfileString("SQL", "uid", "", filePath);
-            WritePrivateProfileString("SQL", "pwd", "", filePath);
+            WritePrivateProfileString("SQL", "server", "1", filePath);
+            WritePrivateProfileString("SQL", "database", "2", filePath);
+            WritePrivateProfileString("SQL", "uid", "3", filePath);
+            WritePrivateProfileString("SQL", "pwd", "4", filePath);
 
             GetPrivateProfileString("SQL", "server", "", SERVER, 32, filePath);
             GetPrivateProfileString("SQL", "database", "", DATABASE, 32, filePath);

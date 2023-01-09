@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleAppSample.study;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace ConsoleAppSample.programmers.all_problems
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
-        int solution1(int[] array)
+        public int solution1(int[] array)
         {
             int answer = 0;
             int[] t = Enumerable.Repeat(0, 1000).ToArray();
@@ -38,7 +39,7 @@ namespace ConsoleAppSample.programmers.all_problems
         /// </summary>
         /// <param name="age"></param>
         /// <returns></returns>
-        string solution2(int age)
+        public string solution2(int age)
         {
             string answer = "";
             foreach (char c in age.ToString())
@@ -49,13 +50,14 @@ namespace ConsoleAppSample.programmers.all_problems
 
             return answer;
         }
+
         /// <summary>
         /// 진료 순서 정하기
         /// emergency가 매개변수로 주어질 때 응급도가 높은 순서대로 진료 순서를 정한 배열을 return하도록 solution 함수를 완성해주세요.
         /// </summary>
         /// <param name="emergency"></param>
         /// <returns></returns>
-        int[] solution3(int[] emergency)
+        public int[] solution3(int[] emergency)
         {
             int[] answer = new int[emergency.Length];
             int[] sort_emergency = new int[emergency.Length];
@@ -77,7 +79,7 @@ namespace ConsoleAppSample.programmers.all_problems
         /// </summary>
         /// <param name="my_string"></param>
         /// <returns></returns>
-        int solution4(string my_string)
+        public int solution4(string my_string)
         {
             int answer = 0;
             foreach (char c in my_string)
@@ -94,7 +96,7 @@ namespace ConsoleAppSample.programmers.all_problems
         /// </summary>
         /// <param name="letter"></param>
         /// <returns></returns>
-        string solution5(string letter)
+        public string solution5(string letter)
         {
             string[] mos = new string[] { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.." };
             string answer = "";
@@ -113,8 +115,58 @@ namespace ConsoleAppSample.programmers.all_problems
         /// <param name="n"></param>
         /// <param name="m"></param>
         /// <returns></returns>
-    public int solution6(int n, int m)
+        public int solution6(int n, int m)
         {
+            long GetFactorial(int n, int m)
+            {
+                if (n == m)
+                    return 1;
+
+                long t = 1;
+                long b = 1;
+                long b2 = 1;
+                for (int i = 2; i <= n; i++)
+                {
+                    t = t * i;
+
+                    if (i <= (n - m))
+                        b = b * i;
+
+                    if (i <= m)
+                        b2 = b2 * i;
+
+                    if (t % b == 0 && b > 1)
+                    {
+                        t = t / b;
+                        b = 1;
+                    }
+
+                    if (t % b2 == 0 && b2 > 1)
+                    {
+                        t = t / b2;
+                        b2 = 1;
+                    }
+
+                    long gcd = 0;
+
+                    if (b > b2)
+                    {
+                        gcd = Getgcd(t, b);
+                        t = t / gcd;
+                        b = b / gcd;
+                    }
+                    else
+                    {
+                        gcd = Getgcd(t, b2);
+                        t = t / gcd;
+                        b2 = b2 / gcd;
+                    }
+                }
+
+                t = t / (b * b2);
+                return t;
+            }
+
             if (m >= n / 2)
             {
                 m = n - m;
@@ -123,75 +175,57 @@ namespace ConsoleAppSample.programmers.all_problems
             return (Int32)answer;
         }
 
-        long GetFactorial(int n, int m)
+        long Getgcd(long a, long b)
         {
-            if (n == m)
-                return 1;
+            if (a % b == 0)
+                return b;
+            return Getgcd(b, a % b);
+        }
 
-            long t = 1;
-            long b = 1;
-            long b2 = 1;
-            for (int i = 2; i <= n; i++)
+        /// <summary>
+        /// 한 번만 등장한 문자
+        /// 문자열 s가 매개변수로 주어집니다. s에서 한 번만 등장하는 문자를 사전 순으로 정렬한 문자열을 return 하도록 solution 함수를 완성해보세요. 한 번만 등장하는 문자가 없을 경우 빈 문자열을 return 합니다.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public string solution7(string s)
+        {
+            string answer = string.Concat(s.Where(x => s.Count(o => o == x) == 1).OrderBy(x => x));
+            return answer;
+        }
+
+        /// <summary>
+        /// 문자열 계산하기
+        /// my_string은 "3 + 5"처럼 문자열로 된 수식입니다. 문자열 my_string이 매개변수로 주어질 때, 수식을 계산한 값을 return 하는 solution 함수를 완성해주세요.
+        /// </summary>
+        /// <param name="my_string"></param>
+        /// <returns></returns>
+        public int solution8(string my_string)
+        {
+            int answer = 0;
+
+            string[] spritstr = my_string.Split(" ");
+            string operation = string.Empty;
+            foreach (string s in spritstr)
             {
-                t = t * i;
-
-                if (i <= (n - m))
-                    b = b * i;
-
-                if (i <= m)
-                    b2 = b2 * i;
-
-                if (t % b == 0 && b > 1)
+                if (int.TryParse(s, out int temp))
                 {
-                    t = t / b;
-                    b = 1;
-                }
-
-                if (t % b2 == 0 && b2 > 1)
-                {
-                    t = t / b2;
-                    b2 = 1;
-                }
-
-                long gcd = 0;
-
-                if (b > b2)
-                {
-                    gcd = Getgcd(t, b);
-                    t = t / gcd;
-                    b = b / gcd;
+                    if (operation == "-")
+                    {
+                        answer -= temp;
+                    }
+                    else
+                    {
+                        answer += temp;
+                    }
                 }
                 else
                 {
-                    gcd = Getgcd(t, b2);
-                    t = t / gcd;
-                    b2 = b2 / gcd;
+                    operation = s;
                 }
             }
 
-            t = t / (b * b2);
-            return t;
-        }
-
-        long Getgcd(long m, long n)
-        {
-            long b = 0;
-            long s = 0;
-            if (m > n)
-            {
-                b = m;
-                s = n;
-            }
-            else
-            {
-                b = n;
-                s = m;
-            }
-
-            if (b % s == 0)
-                return s;
-            else
-                return Getgcd(s, b % s);
+            return answer;
         }
     }
 }

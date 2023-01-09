@@ -15,10 +15,10 @@ namespace ConsoleAppSample.study
             int m = 6;
 
             int gcd = getgcd(n, m); //2
-            int lcm = n * m / gcd; //30
+            int lcm = n * m / gcd; //30  최소 공배수
         }
         /// <summary>
-        /// 최소공배수, 유클리드 호제법
+        /// 최대공약수, 유클리드 호제법
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
@@ -79,7 +79,7 @@ namespace ConsoleAppSample.study
         public long solution(long n)
         {
             long answer = 0;
-
+            
             var sqrt = Math.Sqrt(n);
             // 정수인지 확인
             if (sqrt % 1.0 != 0)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSample.Study
+namespace ConsoleAppSample.Study.Cls
 {
     internal class ConvertCls
     {
@@ -13,7 +13,11 @@ namespace ConsoleAppSample.Study
         //기본 데이터 형식을 다른 데이터 형식으로 변환합니다.
         //https://learn.microsoft.com/ko-kr/dotnet/api/system.convert
 
-        public ConvertCls(){
+        public ConvertCls()
+        {
+            //x진수를 10진수로  Convert.ToInt16, 32(Source, x진수)
+            //10진수를 x진수 문자열로 Convert.ToString(Source, x진수)
+
             // 2진수 문자열을 10진수 숫자로
             string strBase2 = "0000011011101010"; // 0x06EA
             int iBase10 = Convert.ToInt32(strBase2, 2);
@@ -33,7 +37,7 @@ namespace ConsoleAppSample.Study
 
             // 10진수를 2진수 문자열로
             string strBase2_2 = Convert.ToString(iBase10, 2);
-
+            
             Console.WriteLine(" 2진수: {0}", strBase2); // 0000011011101010
             Console.WriteLine("10진수: {0}", iBase10);  // 1770
             Console.WriteLine("16진수: {0}", strHex);   // 6ea
@@ -48,7 +52,7 @@ namespace ConsoleAppSample.Study
             string s = "9E";
             byte b2 = byte.Parse(s, NumberStyles.HexNumber);
 
-            
+
         }
 
     }

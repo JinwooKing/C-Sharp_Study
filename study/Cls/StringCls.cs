@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSample.Study
+namespace ConsoleAppSample.Study.Cls
 {
     public class StringCls
     {
@@ -22,16 +22,13 @@ namespace ConsoleAppSample.Study
             string st2 = new string(chars);
             string st3 = string.Concat(chars);
 
-
             string.Join("", chars).Count(x => x == 5);
 
             char c1 = 'a'; // 'a' = 97 'A' = '65'
             char c2 = 'b'; // 'b' = 98 'B' = '66'
             char c3 = '0'; // '0' = 48 '1' = 49
 
-            
 
-            
             //입력된 숫자를 문자로 변환
             Convert.ToInt32('0'); // 48
             Convert.ToInt32('1'); // 49
@@ -46,7 +43,7 @@ namespace ConsoleAppSample.Study
             string t = string.Empty;
             name.ToUpper();
             name.ToLower();
-           
+
             char[] tt = "123".ToCharArray();
             Array.IndexOf(tt, '1');
 
@@ -54,6 +51,16 @@ namespace ConsoleAppSample.Study
             {
                 t.ToString();
             }
+
+
+            //사용자 지정 숫자 형식 문자열
+            //https://learn.microsoft.com/ko-kr/dotnet/standard/base-types/custom-numeric-format-strings
+            //0번째 변수 22칸 띄워쓰기 0000 포멧
+            string.Format("{0,22:0000}", 100);
+            //output:
+            //                  0100
+            string.Format("{0,10:N2}", 10.23456); //10.23
+            string.Format("{0: 000}", 1);
         }
 
         //문자열에서 숫자만 분리

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSample.study
+namespace ConsoleAppSample.Study.Cls
 {
     public class EnumerableCls
     {

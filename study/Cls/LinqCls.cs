@@ -1,4 +1,4 @@
-﻿namespace ConsoleAppSample.Study
+﻿namespace ConsoleAppSample.Study.Cls
 {
     public class LinqCls
     {
@@ -17,7 +17,7 @@
             //temp는 각 자리수의 합
             var temp = x.ToString().ToList().Select(y => int.Parse(y.ToString())).Sum();
 
-            
+
             IEnumerable<int> answer = ints.Where((x, i) => (i + 1) % 2 == 0); // 2배수 index만 return
             temp = ints.OrderBy(x => x).OrderBy(x => Math.Abs(x - 5)).ToArray().First(); // 5와 가장 가까운 수
 
@@ -35,8 +35,8 @@
 
             //Linq Order
             printArray(from num in ints2 where num % 2 == 0 orderby num descending select num); //108642
-            
-            
+
+
 
             //그룹, 조인
             //https://learn.microsoft.com/ko-kr/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations

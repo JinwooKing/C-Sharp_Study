@@ -42,9 +42,7 @@ namespace ConsoleAppSample.Model.Helper
                 
                 do
                 {
-                    path = string.Concat(FileNameWithoutExtension,
-                                         $" ({i++})",
-                                         fi.Extension);
+                    path = string.Concat(FileNameWithoutExtension, $" ({i++})", fi.Extension);
                 } while (File.Exists(path));
             }
             return path;

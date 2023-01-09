@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSample.study
+namespace ConsoleAppSample.Study.Cls
 {
     public class DirectoryClass
     {
@@ -21,7 +21,7 @@ namespace ConsoleAppSample.study
         /// </summary>
         public void GetCurrentDirectory()
         {
-            string CurrentDirectory = String.Empty;
+            string CurrentDirectory = string.Empty;
 
             //웹 애플리케이션
             //using System.Web;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSample.Study
+namespace ConsoleAppSample.Study.Cls
 {
     public class DateTimeCls
     {
