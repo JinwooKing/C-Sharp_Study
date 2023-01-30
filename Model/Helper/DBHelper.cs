@@ -1,6 +1,6 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using Dapper;
+using Oracle.ManagedDataAccess.Client;
 using System.Data.SqlClient;
-using Dapper;
 
 namespace ConsoleAppSample.Model.Helper
 {

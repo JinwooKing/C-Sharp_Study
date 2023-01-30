@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.Model.Helper
+﻿namespace ConsoleAppSample.Model.Helper
 {
     public class FileHelper
     {
@@ -39,7 +33,7 @@ namespace ConsoleAppSample.Model.Helper
             {
                 FileInfo fi = new FileInfo(path);
                 string FileNameWithoutExtension = Path.Combine(fi.DirectoryName, Path.GetFileNameWithoutExtension(path));
-                
+
                 do
                 {
                     path = string.Concat(FileNameWithoutExtension, $" ({i++})", fi.Extension);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.Programmers.all_problems
+﻿namespace ConsoleAppSample.Programmers.all_problems
 {
     class lv2
     {

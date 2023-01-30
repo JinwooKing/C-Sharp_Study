@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace ConsoleAppSample.Study.Cls
+﻿namespace ConsoleAppSample.Study.Cls
 {
     public class FileCls
     {

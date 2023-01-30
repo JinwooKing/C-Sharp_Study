@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleAppSample.Model.Helper
 {
@@ -20,7 +16,7 @@ namespace ConsoleAppSample.Model.Helper
 
         public IniHelper()
         { // GetPrivateProfileString("카테고리", "Key값", "기본값", "저장할 변수", "불러올 경로");
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
                 File.Create(filePath);
             WritePrivateProfileString("SQL", "server", "1", filePath);
             WritePrivateProfileString("SQL", "database", "2", filePath);

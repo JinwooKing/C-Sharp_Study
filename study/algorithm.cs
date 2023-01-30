@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.study
+﻿namespace ConsoleAppSample.study
 {
     public class Algorithm
     {
@@ -79,7 +73,7 @@ namespace ConsoleAppSample.study
         public long solution(long n)
         {
             long answer = 0;
-            
+
             var sqrt = Math.Sqrt(n);
             // 정수인지 확인
             if (sqrt % 1.0 != 0)

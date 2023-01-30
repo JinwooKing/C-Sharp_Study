@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.Study.Cls
+﻿namespace ConsoleAppSample.Study.Cls
 {
     public class ArrayCls
     {
@@ -16,7 +10,7 @@ namespace ConsoleAppSample.Study.Cls
         {
             //int[] ints = Enumerable.Range(1, 10).Select(x => x * x).ToArray();
             //int[] ints2 = Enumerable.Repeat(1, 10).ToArray();
-            
+
             int[] ints = new int[3];
             int[] ints2 = new int[] { };
             int[] ints3 = new int[] { 8, 2, 6, 3, 1, 5, 9, 7, 4 };
@@ -39,7 +33,7 @@ namespace ConsoleAppSample.Study.Cls
             // Displays the properties of the Array.
             Console.WriteLine("The Array has {0} dimension(s) and a total of {1} elements.", myArr.Rank, myArr.Length);
             Console.WriteLine("\tLength\tLower\tUpper");
-            
+
             for (int dimension = 0; dimension < myArr.Rank; dimension++)
             {
                 Console.Write("{0}:\t{1}", dimension, myArr.GetLength(dimension));
@@ -84,7 +78,7 @@ namespace ConsoleAppSample.Study.Cls
             Array.Sort(t.ToString().ToArray());
             t.ToString().AsEnumerable().Reverse();
             var temp = from num in t.ToString() select Convert.ToInt16(t.ToString());
-            
+
 
             char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', };
             chars.Reverse();

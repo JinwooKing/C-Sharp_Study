@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.Programmers.all_problems
+﻿namespace ConsoleAppSample.Programmers.all_problems
 {
     internal class lv1
     {
@@ -63,7 +57,7 @@ namespace ConsoleAppSample.Programmers.all_problems
             }
 
             int answer = n - t_lost.Count(); ;
-            return answer; 
+            return answer;
         }
 
 

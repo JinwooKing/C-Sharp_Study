@@ -1,11 +1,4 @@
-﻿using ConsoleAppSample.study;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.programmers.all_problems
+﻿namespace ConsoleAppSample.programmers.all_problems
 {
     class lv0
     {

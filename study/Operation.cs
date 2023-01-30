@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleAppSample.Study
+﻿namespace ConsoleAppSample.Study
 {
     internal class Operation
     {
-        Operation() 
-        { 
+        Operation()
+        {
             // 산술 연산자 + - * / , % (modulo)
             double 섭씨 = 12;
-            double 화씨 = (섭씨 * 9 / 5)  + 32; // 53.6
+            double 화씨 = (섭씨 * 9 / 5) + 32; // 53.6
 
             int i = 100 % 3; //1
 
@@ -38,14 +32,14 @@ namespace ConsoleAppSample.Study
             if (index >= 100) { }
 
             // 논리 연산자 && || !
-            if(index > 1 && index < 1000)
+            if (index > 1 && index < 1000)
             {
                 index++;
             }
 
             x = 0;
             y = 1;
-            if(++x > 0 || ++ y > 1)
+            if (++x > 0 || ++y > 1)
             {
                 // ...
             }
