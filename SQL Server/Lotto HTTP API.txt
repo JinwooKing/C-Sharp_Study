@@ -1,0 +1,68 @@
+﻿--============================
+-- LOTTO 테이블 생성
+--============================
+CREATE TABLE lotto (
+	drwNoDate DATE primary key,
+	drwNo INT,
+    drwtNo1 INT,
+	drwtNo2 INT,
+    drwtNo3 INT,
+	drwtNo4 INT,
+	drwtNo5 INT,
+	drwtNo6 INT,
+	bnusNo INT,
+    totSellamnt BIGINT,
+    firstWinamnt BIGINT,
+    firstPrzwnerCo INT,
+    firstAccumamnt BIGINT,
+	returnValue NVARCHAR(50),
+);
+
+--============================
+-- URL 을 통하여 데이터 수집 
+--============================
+DECLARE @URL VARCHAR(8000)
+DECLARE @DRWNO INT
+DECLARE @Response VARCHAR(8000)
+DECLARE @Obj INT 
+
+SET @DRWNO = DATEDIFF(WEEK, CAST('2002-12-07' as datetime), FORMAT(GETDATE(), 'yyyy-MM-dd'))
+SET @URL = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + CAST(@DRWNO AS VARCHAR)
+
+EXEC sp_OACreate 'MSXML2.XMLHttp', @Obj OUT 							
+EXEC sp_OAMethod @Obj, 'open', NULL, 'GET', @URL, false					
+EXEC sp_OAMethod @Obj, send, NULL, ''								
+EXEC sp_OAMethod @Obj, 'responseText', @Response OUT
+
+Exec sp_OADestroy @obj					
+
+--==========================================
+--  수집된 데이터를 이용하여 필요정보 색출 
+--==========================================
+INSERT INTO lotto SELECT * FROM OPENJSON(@response)
+WITH (
+	drwNoDate NVARCHAR(10) '$.drwNoDate',
+	drwNo INT '$.drwNo',
+    drwtNo1 INT '$.drwtNo1',
+	drwtNo2 INT '$.drwtNo2',
+	drwtNo3 INT '$.drwtNo3',
+	drwtNo4 INT '$.drwtNo4',
+    drwtNo5 INT '$.drwtNo5',
+	drwtNo6 INT '$.drwtNo6',
+    bnusNo INT '$.bnusNo',
+	totSellamnt BIGINT '$.totSellamnt',
+    firstWinamnt BIGINT '$.firstWinamnt',  
+	firstPrzwnerCo INT '$.firstPrzwnerCo',
+    firstAccumamnt BIGINT '$.firstAccumamnt',
+	returnValue NVARCHAR(50) '$.returnValue'
+);
+
+* openJson을 사용하려면 Database의 호환성 수준이 130이상이어야 합니다.
+== 호환성 수준 확인 ==
+SELECT compatibility_level  
+FROM sys.databases  
+WHERE name = 'database_name';
+
+== 호환성 수준 변경 == 
+ALTER DATABASE database_name  
+SET COMPATIBILITY_LEVEL = compatibility_level;

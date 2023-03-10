@@ -13,4 +13,7 @@ Go
 Reconfigure;
 Go
 
-Exec master..xp_cmdshell 'bcp "SELECT [ProductID], [Name], [ProductNumber], [Color], [StandardCost] FROM [AdventureWorksLT2019].[SalesLT].[Product] FOR JSON PATH" queryout "C:\TEST\test.txt" -S8.8.8.8[서버이름] -Ujinwoo[로그인] -P1234[암호] -c -t'
+Exec master..xp_cmdshell 
+'bcp "SELECT [ProductID], [Name], [ProductNumber], [Color], [StandardCost] 
+      FROM [AdventureWorksLT2019].[SalesLT].[Product] FOR JSON PATH" 
+queryout "C:\TEST\test.txt" -S8.8.8.8[서버이름] -Ujinwoo[로그인] -P1234[암호] -c -t'
