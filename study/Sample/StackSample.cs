@@ -1,6 +1,6 @@
 ﻿namespace ConsoleAppSample.Study.Sample
 {
-    class JinwooStack<T>
+    class StackSample<T>
     {
         Entry _top;
 
