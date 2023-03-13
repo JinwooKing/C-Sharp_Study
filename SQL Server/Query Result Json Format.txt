@@ -1,11 +1,13 @@
-﻿1. JSON 형식으로 데이터 조회
+﻿--============================
+-- JSON 형식으로 데이터 조회
+--============================
 SELECT [ProductID], [Name], [ProductNumber], [Color], [StandardCost]
 FROM [AdventureWorksLT2019].[SalesLT].[Product]
 FOR JSON PATH;
 
-2. 파일 생성
-* 파일 생성 위치에 접근 권한이 있어야 합니다.
-
+--============================
+-- 파일 생성 기능 설정
+--============================
 EXEC sp_configure 'show advanced options', 1; 
 GO
 EXEC Sp_configure 'xp_cmdshell', 1;
@@ -13,6 +15,10 @@ Go
 Reconfigure;
 Go
 
+--============================
+-- 파일 생성
+--============================
+* 파일 생성 위치에 접근 권한이 있어야 합니다.
 Exec master..xp_cmdshell 
 'bcp "SELECT [ProductID], [Name], [ProductNumber], [Color], [StandardCost] 
       FROM [AdventureWorksLT2019].[SalesLT].[Product] FOR JSON PATH" 

@@ -22,12 +22,24 @@ CREATE TABLE lotto (
 -- URL 을 통하여 데이터 수집 
 --============================
 DECLARE @URL VARCHAR(8000)
-DECLARE @DRWNO INT
+DECLARE @DRWNO INT = DATEDIFF(WEEK, CAST('2002-12-07' as datetime), FORMAT(GETDATE(), 'yyyy-MM-dd'))
 DECLARE @Response VARCHAR(8000)
 DECLARE @Obj INT 
 
-SET @DRWNO = DATEDIFF(WEEK, CAST('2002-12-07' as datetime), FORMAT(GETDATE(), 'yyyy-MM-dd'))
-SET @URL = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + CAST(@DRWNO AS VARCHAR)
+--============================
+-- 1회부터 데이터 추가
+--============================
+DECLARE @i INT = 1
+
+WHILE(@i < @DRWNO)
+BEGIN
+SET @URL = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + CAST(@i AS VARCHAR)
+SET @i = @i + 1
+PRINT @i
+--============================
+-- 최근 회차 데이터 추가
+--============================
+--SET @URL = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + CAST(@DRWNO AS VARCHAR)
 
 EXEC sp_OACreate 'MSXML2.XMLHttp', @Obj OUT 							
 EXEC sp_OAMethod @Obj, 'open', NULL, 'GET', @URL, false					
@@ -56,13 +68,112 @@ WITH (
     firstAccumamnt BIGINT '$.firstAccumamnt',
 	returnValue NVARCHAR(50) '$.returnValue'
 );
+END
 
-* openJson을 사용하려면 Database의 호환성 수준이 130이상이어야 합니다.
-== 호환성 수준 확인 ==
-SELECT compatibility_level  
-FROM sys.databases  
-WHERE name = 'database_name';
+--==========================================
+-- 특정번호가 뽑힌 횟수
+-- EXEC GetDrwtCount '1'
+--==========================================
+CREATE PROCEDURE [dbo].[GetDrwtCount]
 
-== 호환성 수준 변경 == 
-ALTER DATABASE database_name  
-SET COMPATIBILITY_LEVEL = compatibility_level;
+ @SERCHNO INT
+AS
+BEGIN
+	SELECT COUNT(1) AS 'cnt'
+	FROM LOTTO 
+	WHERE drwtNo1 = @SERCHNO OR
+		drwtNo2 = @SERCHNO OR
+		drwtNo3 = @SERCHNO OR
+		drwtNo4 = @SERCHNO OR
+		drwtNo5 = @SERCHNO OR
+		drwtNo6 = @SERCHNO 
+END 
+
+--==========================================
+-- 번호별 뽑힌 횟수
+-- SELECT * FROM GetDrwtCount()
+-- SELECT * FROM GetDrwtCount() ORDER BY cnt DESC;
+--==========================================
+CREATE FUNCTION [dbo].[GetDrwtCount](
+)
+RETURNS @Results TABLE(
+	num INT,
+	cnt INT
+)
+AS
+BEGIN
+	DECLARE @i INT = 1;	
+	
+	WHILE(@i < 46)
+	BEGIN
+		WITH TEMP AS (
+		SELECT @i AS 'num', COUNT(1) AS 'cnt' 
+		FROM LOTTO 
+		WHERE drwtNo1 = @i OR
+			drwtNo2 = @i OR
+			drwtNo3 = @i OR
+			drwtNo4 = @i OR
+			drwtNo5 = @i OR
+			drwtNo6 = @i 
+		)
+		INSERT @Results 
+		SELECT * FROM TEMP
+	
+		SET @i = @i + 1;
+	END
+	RETURN
+END 
+
+--==========================================
+-- 특정 번호가 뽑힌 게임
+-- SELECT * FROM GetDrwtGame(1)
+--==========================================
+CREATE FUNCTION [dbo].[GetDrwtGame](
+	@Num INT
+)
+RETURNS TABLE
+AS
+RETURN 
+SELECT * 
+FROM LOTTO 
+WHERE drwtNo1 = @Num 
+	OR drwtNo2 = @Num
+	OR drwtNo3 = @Num
+	OR drwtNo4 = @Num
+	OR drwtNo5 = @Num
+	OR drwtNo6 = @Num
+
+--==========================================
+-- 특정 번호가 뽑힌 게임에서 번호별 뽑힌 횟수
+-- SELECT * FROM GetDrwtCountSub(1)
+--==========================================
+CREATE FUNCTION [dbo].[GetDrwtCountSub](
+	@NUM INT
+)
+RETURNS @Results TABLE(
+	num INT,
+	cnt INT
+)
+AS
+BEGIN
+	DECLARE @i INT = 1;	
+	
+	WHILE(@i < 46)
+	BEGIN
+		WITH TEMP AS (
+		SELECT @i AS 'num', COUNT(1) AS 'cnt' 
+		FROM (SELECT * FROM [dbo].[GetDrwtGame](@NUM)) AS T
+		WHERE drwtNo1 = @i OR
+			drwtNo2 = @i OR
+			drwtNo3 = @i OR
+			drwtNo4 = @i OR
+			drwtNo5 = @i OR
+			drwtNo6 = @i 
+		)
+		INSERT @Results 
+		SELECT * FROM TEMP
+	
+		SET @i = @i + 1;
+	END
+	RETURN
+END 

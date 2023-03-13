@@ -1,0 +1,48 @@
+﻿--============================
+-- WITH AS
+--============================
+MS SQL Server의 "WITH AS"는 일반적으로 "공통 표현식" 또는 "서브 쿼리 팩터링"이라고도합니다. 
+쿼리 내부에서 재사용 가능한 서브 쿼리를 만들기위한 T-SQL 구문입니다.
+
+"With" 키워드 다음에 정의 된 서브 쿼리는 일반적으로 "AS" 키워드 다음에 정의 된 별칭과 함께 사용됩니다.
+메인 쿼리에서는 해당 별칭을 사용하여 서브 쿼리의 결과를 참조 할 수 있습니다.
+
+"With AS"를 사용하면 쿼리의 가독성과 유지 보수성이 향상되고 복잡한 쿼리를 작성할 때 중복 코드를 방지 할 수 있습니다. 
+예를 들어, 공통 표현식을 사용하여 복잡한 조인을 처리하거나 데이터를 계층적으로 조회하는 쿼리를 작성할 수 있습니다.
+
+* 테스트 환경
+[AdventureWorksLT2019].[SalesLT].[ProductCategory]
+
+--============================
+-- 임시 테이블에 저장한뒤 사용
+--============================
+WITH [Order] AS (
+	SELECT SalesOrderID, SUM(UnitPrice) AS TotalPrice 
+	FROM [SalesLT].[SalesOrderDetail] 
+	GROUP BY SalesOrderID
+)
+SELECT * FROM [Order] WHERE TotalPrice > 500
+
+
+--============================
+-- 제품 카테고리의 계층 구조 조회
+--============================
+DECLARE @ProductCategoryID INT = 4;
+
+WITH TEMP AS (
+	SELECT ProductCategoryID, ParentProductCategoryID, [Name], 0 AS Depth
+	FROM [SalesLT].[ProductCategory]
+	WHERE ProductCategoryID = @ProductCategoryID
+
+	UNION ALL
+
+	SELECT Child.ProductCategoryID, Child.ParentProductCategoryID, Child.[Name], Parent.Depth + 1 AS Depth
+	FROM [SalesLT].[ProductCategory] AS Child
+	INNER JOIN TEMP AS Parent
+	ON Child.ParentProductCategoryID = Parent.ProductCategoryID
+)
+SELECT * FROM TEMP
+
+*JOIN ON에서 Child와 Parent를 바꿈으로써 계층 구조 조회 방향을 변경할 수 있습니다. 
+예를 들어, Child.ParentProductCategoryID = Parent.ProductCategoryID 대신 Parent.ProductCategoryID = Child.ParentProductCategoryID를 사용하면
+계층 구조를 상위에서 하위 방향으로 조회할 수 있습니다.
