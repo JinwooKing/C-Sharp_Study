@@ -6,8 +6,7 @@ namespace ConsoleAppSample.Model.Helper
 {
     public class NlogHelper
     {
-		protected static readonly Microsoft.Extensions.Logging.ILogger logger = LoggerFactory.Create(builder => builder.AddNLog()).CreateLogger<Program>();
-			
+		protected static readonly Microsoft.Extensions.Logging.ILogger logger = LoggerFactory.Create(builder => builder.AddNLog()).CreateLogger<Program>();			
 		public enum LogType
 		{
 			Info,

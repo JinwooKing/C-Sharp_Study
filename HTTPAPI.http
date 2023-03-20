@@ -1,0 +1,11 @@
+###
+GET https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=1
+
+###
+POST https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=1
+Content-Type: application/json
+
+{
+    "method":"getLottoNumber",
+    "drwNo": "1"
+}

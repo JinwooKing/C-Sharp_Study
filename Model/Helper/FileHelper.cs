@@ -1,4 +1,6 @@
-﻿namespace ConsoleAppSample.Model.Helper
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+
+namespace ConsoleAppSample.Model.Helper
 {
     public class FileHelper
     {
@@ -27,19 +29,71 @@
         /// <returns></returns>
         public static string GetUniqFileName(string path)
         {
-            int i = 1;
+            int i = 2;
 
             if (File.Exists(path))
             {
-                FileInfo fi = new FileInfo(path);
-                string FileNameWithoutExtension = Path.Combine(fi.DirectoryName, Path.GetFileNameWithoutExtension(path));
+                string directoryName = Path.GetDirectoryName(path);
+				string fileNameWithoutExtension = Path.Combine(directoryName, Path.GetFileNameWithoutExtension(path));
+				string extension = Path.GetExtension(path);
 
-                do
+				do
                 {
-                    path = string.Concat(FileNameWithoutExtension, $" ({i++})", fi.Extension);
-                } while (File.Exists(path));
-            }
-            return path;
-        }
-    }
+					path = $"{fileNameWithoutExtension} ({i++}){extension}";
+				} while (File.Exists(path));
+			}
+			return path;
+		}
+
+		/// <summary>
+		/// PARCIO 파일생성
+		/// </summary>
+		/// <param name="dataList"></param>
+		public static void WriteFile(List<TagInfo> dataList)
+		{
+			string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt";
+			string rootDir = Path.Combine(Consts.FILE_ROOT_PATH, fileName);
+			string tempDir = Path.Combine(Consts.FILE_TEMP_PATH, fileName);
+			try
+			{
+				// 파일 생성.
+				// parcIO는 해당 폴더에 파일 생성시 바로 읽기 때문에 문제가 될 여지가 있어서 
+				// temp 폴더에 생성후 복사 방식으로 처리. 
+				using (StreamWriter writer = File.CreateText(tempDir))
+				{
+					string tagStr = string.Empty;
+
+					//마지막 반복문
+					int lastIndex = dataList.Count - 1;
+
+					for (int i = 0; i < dataList.Count; i++)
+					{
+						TagInfo tag = dataList[i];
+						tagStr = string.Format("{0},{1},{2},{3}", tag.tagName, tag.tagTime, tag.tagValue, 192);
+						if (i == lastIndex)
+							writer.Write(tagStr);
+						else
+							writer.WriteLine(tagStr);
+					}
+				}
+
+				// 생성한 파일을 이동.
+				File.Move(tempDir, rootDir);
+				//File.Copy(tempDir, rootDir);
+			}
+			catch (Exception e)
+			{
+				NlogHelper.LogWrite(e.ToString(), NlogHelper.LogType.Error);
+			}
+		}
+		public class TagInfo
+		{
+			public string tagName { get; set; }
+
+			//public DateTime tagTime { get; set; }
+			public string tagTime { get; set; }
+			public string tagValue { get; set; }
+			public string tagQuality { get; set; }
+		}
+	}
 }

@@ -1,4 +1,5 @@
-﻿--============================
+﻿--GET https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=1
+--============================
 -- LOTTO 테이블 생성
 --============================
 CREATE TABLE lotto (
