@@ -8,15 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.96.0" />
+    <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="libphonenumber-csharp" Version="8.13.6" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.4" />
-    <PackageReference Include="Oracle.ManagedDataAccess" Version="21.8.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.4" />
+    <PackageReference Include="libphonenumber-csharp" Version="8.13.7" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.2" />
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="21.9.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
     <None Update="nlog.config" CopyToOutputDirectory="Always" />
 
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Windows Service\" />
   </ItemGroup>
 
 </Project>

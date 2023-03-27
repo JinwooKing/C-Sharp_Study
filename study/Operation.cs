@@ -1,4 +1,6 @@
-﻿namespace ConsoleAppSample.Study
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+
+namespace ConsoleAppSample.Study
 {
     internal class Operation
     {
@@ -51,6 +53,45 @@
             x = Convert.ToInt32("00000111", 2);
             y = Convert.ToInt32("00001101", 2);
 
+            //null 확인
+            string st = "";
+            
+            if (st is null)
+                st = "is null";
+
+            if (st is not null)
+                st = "is not null";
+            
+
         }
+
+        void Yield()
+        {
+			// yield 문법
+			foreach (int pInt in GetIntArrary())
+			{
+				Console.WriteLine(pInt);
+			}
+
+			foreach (string str in GetStrArrary())
+			{
+				Console.WriteLine($"{str}");
+			}
+
+
+			IEnumerable<string> GetStrArrary()
+			{
+				string[] strArr = { "TEST1", "TEST2", "TEST3" };
+				foreach (string str in strArr)
+					yield return str;
+			}
+
+			IEnumerable<int> GetIntArrary()
+			{
+				int[] intArr = { 1, 2, 3 };
+				foreach (int tInt in intArr)
+					yield return tInt;
+			}
+		}
     }
 }

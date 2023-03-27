@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Oracle.ManagedDataAccess.Client;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace ConsoleAppSample.Model.Helper
 {
@@ -12,10 +12,35 @@ namespace ConsoleAppSample.Model.Helper
             SqlServerConnectionTest();
         }
 
-        /// <summary>
-        /// SQL Server 데이터베이스
-        /// </summary>
-        public static void SqlServerConnectionTest()
+		private static string SERVER = "000.000.000.000";
+		private static string UID = "sa";
+		private static string PWD = "000000";
+		private static string DATABASE = "AdventureWorksLT2019";
+
+		private static SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder
+		{
+			DataSource = SERVER,
+			UserID = UID,
+			Password = PWD,
+			InitialCatalog = DATABASE,
+			Encrypt = true,
+			TrustServerCertificate = true,
+			ColumnEncryptionSetting = SqlConnectionColumnEncryptionSetting.Enabled
+		};
+
+		/// <summary>
+		///  SqlConnection 객체를 반환
+		/// </summary>
+		/// <returns></returns>
+		public static string GetConnectionString()
+		{
+			return sqlConnectionStringBuilder.ConnectionString;
+		}
+
+		/// <summary>
+		/// SQL Server 데이터베이스
+		/// </summary>
+		public static void SqlServerConnectionTest()
         {
             //0. 접속정보
             string SERVER = "000.000.000.000";
@@ -26,11 +51,14 @@ namespace ConsoleAppSample.Model.Helper
             //1. SqlConnectionStringBuilder 사용
             SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder()
             {
-                DataSource = SERVER,
-                UserID = UID,
-                Password = PWD,
-                InitialCatalog = DATABASE
-            };
+				DataSource = SERVER,
+				UserID = UID,
+				Password = PWD,
+				InitialCatalog = DATABASE,
+				Encrypt = true,
+				TrustServerCertificate = true,
+				ColumnEncryptionSetting = SqlConnectionColumnEncryptionSetting.Enabled
+			};
 
             //1-2. ConnectionString 사용
             //string ConnectionString = $"Data Source={SERVER};Initial Catalog={DATABASE};User ID={UID};Password={PWD}";
