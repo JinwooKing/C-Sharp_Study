@@ -61,37 +61,6 @@ namespace ConsoleAppSample.Study
 
             if (st is not null)
                 st = "is not null";
-            
-
         }
-
-        void Yield()
-        {
-			// yield 문법
-			foreach (int pInt in GetIntArrary())
-			{
-				Console.WriteLine(pInt);
-			}
-
-			foreach (string str in GetStrArrary())
-			{
-				Console.WriteLine($"{str}");
-			}
-
-
-			IEnumerable<string> GetStrArrary()
-			{
-				string[] strArr = { "TEST1", "TEST2", "TEST3" };
-				foreach (string str in strArr)
-					yield return str;
-			}
-
-			IEnumerable<int> GetIntArrary()
-			{
-				int[] intArr = { 1, 2, 3 };
-				foreach (int tInt in intArr)
-					yield return tInt;
-			}
-		}
     }
 }

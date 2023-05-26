@@ -10,6 +10,7 @@
 
             int gcd = getgcd(n, m); //2
             int lcm = n * m / gcd; //30  최소 공배수
+
         }
         /// <summary>
         /// 최대공약수, 유클리드 호제법
@@ -85,6 +86,21 @@
             answer *= answer;
 
             return answer;
+        }
+
+        public void fibonacci()
+        {
+            var fibonacciNumbers = new List<int> { 1, 1 };
+
+            while (fibonacciNumbers.Count < 20)
+            {
+                var previous = fibonacciNumbers[fibonacciNumbers.Count - 1];
+                var previous2 = fibonacciNumbers[fibonacciNumbers.Count - 2];
+
+                fibonacciNumbers.Add(previous + previous2);
+            }
+            foreach (var item in fibonacciNumbers)
+                Console.WriteLine(item);
         }
     }
 }

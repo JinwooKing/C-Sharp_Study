@@ -5,16 +5,17 @@ namespace ConsoleAppSample.Model.Helper
 {
     public class IniHelper
     {
-        static string currentPath = Directory.GetCurrentDirectory();
-        static string filePath = Path.Combine(currentPath, "ConfigEx.ini");
+        //private static string currentPath = Directory.GetCurrentDirectory();
+        private static string currentPath = AppDomain.CurrentDomain.BaseDirectory;
+        private static string filePath = Path.Combine(currentPath, "ConfigEx.ini");
 
-        static StringBuilder SERVER = new StringBuilder();
-        static StringBuilder DATABASE = new StringBuilder();
-        static StringBuilder UID = new StringBuilder();
-        static StringBuilder PWD = new StringBuilder();
+        public static StringBuilder SERVER = new StringBuilder();
+        public static StringBuilder DATABASE = new StringBuilder();
+        public static StringBuilder UID = new StringBuilder();
+        public static StringBuilder PWD = new StringBuilder();
 
 
-        public IniHelper()
+        static IniHelper()
         { // GetPrivateProfileString("카테고리", "Key값", "기본값", "저장할 변수", "불러올 경로");
             if (!File.Exists(filePath))
                 File.Create(filePath);

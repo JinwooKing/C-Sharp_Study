@@ -15,11 +15,11 @@
 
             foreach (int i in array)
             {
-                t[i] = t[i] + 1;
+                t[i]++;
             }
 
             int max = t.Max();
-            if (t.Where(i => i.Equals(max)).ToArray().Count() > 1)
+            if (t.Where(i => i.Equals(max)).Count() > 1)
                 answer = -1;
             else
                 answer = t.ToList().IndexOf(max);
@@ -216,6 +216,26 @@
                 {
                     operation = s;
                 }
+            }
+
+            return answer;
+        }
+
+        /// <summary>
+        /// 옹알이
+        /// </summary>
+        /// <param name="babblings"></param>
+        /// <returns></returns>
+        public int solution9(string[] babblings)
+        {
+            int answer = 0;
+            foreach (string babbling in babblings)
+            {
+                if (string.IsNullOrWhiteSpace(babbling.Replace("aya", " ")
+                                                        .Replace("ye", " ")
+                                                        .Replace("woo", " ")
+                                                        .Replace("ma", " ")))
+                    answer++;
             }
 
             return answer;

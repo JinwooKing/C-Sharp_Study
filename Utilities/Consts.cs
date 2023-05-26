@@ -1,4 +1,4 @@
-﻿namespace ConsoleAppSample.Model.Helper
+﻿namespace ConsoleAppSample.Utilities
 {
     public static class Consts
     {
@@ -7,11 +7,11 @@
 
         // 사용하는 환경에 따라 결과값이 달라진다.
         public static string currDir = Directory.GetCurrentDirectory();
-        	
-        		//=====   파일 저장 경로   =====
-		public static string FILE_ROOT_PATH { get; set; }
-		public static string FILE_TEMP_PATH { get; set; }
-		public static string PORT { get; set; }
 
-	}
+        //=====   파일 저장 경로   =====
+        public static string FILE_ROOT_PATH { get; set; }
+        public static string FILE_TEMP_PATH { get; set; }
+        public static string PORT { get; set; }
+
+    }
 }

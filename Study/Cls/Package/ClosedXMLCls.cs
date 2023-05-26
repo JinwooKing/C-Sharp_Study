@@ -54,9 +54,9 @@ namespace ConsoleAppSample.Study.Cls.Package
 					//worksheet.Cell(rowIdx, "B").Style.NumberFormat.Format = "@"; //표시 형식 '텍스트'로 변경
 					worksheet.Cell(rowIdx, "B").SetValue(sample.Phone);
 
-					rowIdx++;
+                    rowIdx++;
 				}
-
+				
 				// 서식세팅
 				worksheet.Columns("A", "B").AdjustToContents(); // 컨텐츠 크기에 width 맞추기
 				worksheet.Rows().Height = 14;

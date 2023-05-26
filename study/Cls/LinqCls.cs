@@ -20,7 +20,7 @@
 
             IEnumerable<int> answer = ints.Where((x, i) => (i + 1) % 2 == 0); // 2배수 index만 return
             temp = ints.OrderBy(x => x).OrderBy(x => Math.Abs(x - 5)).ToArray().First(); // 5와 가장 가까운 수
-
+            var groupedints = ints.GroupBy(i => i % 2);
             // Query Syntax
             //Linq Select
             printArray(from num in ints select num * 2); //2222222222

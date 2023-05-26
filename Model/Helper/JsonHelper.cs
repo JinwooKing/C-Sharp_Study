@@ -82,7 +82,7 @@ namespace ConsoleAppSample.Model.Helper
         /// <param name="sourceFileName"></param>
         public static void ReadJsonFileAndWriteJsonFile(string sourceFileName)
         {
-            string destFileName = FileHelper.GetUniqFileName(sourceFileName);
+            string destFileName = FileHelper.GetUniqueFileName(sourceFileName);
 
             string jsonString = File.ReadAllText(sourceFileName);
 

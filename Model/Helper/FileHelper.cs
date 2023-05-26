@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using ConsoleAppSample.Utilities;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace ConsoleAppSample.Model.Helper
 {
@@ -9,47 +10,48 @@ namespace ConsoleAppSample.Model.Helper
         //https://learn.microsoft.com/ko-kr/dotnet/api/system.io.file
 
         /// <summary>
-        /// 목적지에 중복된 파일 있는지 검사 후 파일 이동
+        /// 목적지에 중복된 파일이 있는지 검사한 후, 고유한 파일명으로 파일을 이동합니다.
         /// </summary>
-        /// <param name="sourceFileName"></param>
-        /// <param name="destFileName"></param>
+        /// <param name="sourceFileName">원본 파일 경로</param>
+        /// <param name="destFileName">목적지 파일 경로</param>
         public static void FileMove(string sourceFileName, string destFileName)
         {
             if (File.Exists(destFileName))
-                destFileName = GetUniqFileName(destFileName);
+                destFileName = GetUniqueFileName(destFileName);
 
             //이동
             File.Move(sourceFileName, destFileName);
         }
 
         /// <summary>
-        /// 고유한 파일 이름
+        /// 파일 경로를 받아, 고유한 파일명을 생성하여 반환합니다.
+        /// 이미 존재하는 파일명인 경우, 숫자를 접미사로 추가하여 고유성을 확보합니다.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string GetUniqFileName(string path)
+        /// <param name="path">파일 경로</param>
+        /// <returns>고유한 파일명</returns>
+        public static string GetUniqueFileName(string path)
         {
-            int i = 2;
-
             if (File.Exists(path))
             {
                 string directoryName = Path.GetDirectoryName(path);
-				string fileNameWithoutExtension = Path.Combine(directoryName, Path.GetFileNameWithoutExtension(path));
-				string extension = Path.GetExtension(path);
+                string fileNameWithoutExtension = Path.Combine(directoryName, Path.GetFileNameWithoutExtension(path));
+                string extension = Path.GetExtension(path);
+                int suffix = 2;
 
-				do
+                do
                 {
-					path = $"{fileNameWithoutExtension} ({i++}){extension}";
-				} while (File.Exists(path));
-			}
-			return path;
-		}
+                    path = $"{fileNameWithoutExtension} ({suffix++}){extension}";
+                } while (File.Exists(path));
+            }
+            return path;
+        }
 
-		/// <summary>
-		/// PARCIO 파일생성
-		/// </summary>
-		/// <param name="dataList"></param>
-		public static void WriteFile(List<TagInfo> dataList)
+
+        /// <summary>
+        /// PARCIO 파일생성
+        /// </summary>
+        /// <param name="dataList"></param>
+        public static void WriteFile(List<TagInfo> dataList)
 		{
 			string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt";
 			string rootDir = Path.Combine(Consts.FILE_ROOT_PATH, fileName);
@@ -83,9 +85,10 @@ namespace ConsoleAppSample.Model.Helper
 			}
 			catch (Exception e)
 			{
-				NlogHelper.LogWrite(e.ToString(), NlogHelper.LogType.Error);
+				NlogHelper.Log(e.ToString(), LogType.Error);
 			}
 		}
+
 		public class TagInfo
 		{
 			public string tagName { get; set; }

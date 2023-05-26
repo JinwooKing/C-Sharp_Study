@@ -11,7 +11,7 @@ namespace ConsoleAppSample.Model.Helper
             OracleConnectionTest();
             SqlServerConnectionTest();
         }
-
+        
 		private static string SERVER = "000.000.000.000";
 		private static string UID = "sa";
 		private static string PWD = "000000";
@@ -81,8 +81,8 @@ namespace ConsoleAppSample.Model.Helper
         /// </summary>
         public static void OracleConnectionTest()
         {
-            string ConnectionString = @"Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = {000.000.000.000})(PORT = {1521}))) 
-                                                        (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = xe))); User Id={UserId};Password={Password};";
+            string ConnectionString = $@"Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = {SERVER})(PORT = {1521}))) 
+                                                        (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = xe))); User Id={UID};Password={PWD};";
             //"Data Source={DataSource};User Id={UserId};Password={Password};";
 
             OracleConnection conn = new OracleConnection(ConnectionString);

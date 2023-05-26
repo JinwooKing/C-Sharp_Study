@@ -26,7 +26,10 @@ namespace ConsoleAppSample.Study
 
 				Print(arr);
 				PrintInt(arr);
-				Print(new int[] { 1, 2, 3 });
+                PrintInt(1);
+                PrintInt(1, 2);
+                PrintInt(1,2,3);
+                Print(new int[] { 1, 2, 3 });
 				PrintInt(new int[] { 1, 2, 3 });
 				Print(new string[] { "TEST", "TEST2" });
 				Print(new object[] { arr, 1, "TEST", 'A' });
