@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Windows Service\**" />
+    <EmbeddedResource Remove="Windows Service\**" />
+    <None Remove="Windows Service\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="libphonenumber-csharp" Version="8.13.7" />
@@ -34,10 +40,6 @@
     <PackageReference Include="System.ServiceModel.Security" Version="4.10.*" />
     <None Update="nlog.config" CopyToOutputDirectory="Always" />
 
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Windows Service\" />
   </ItemGroup>
 
 </Project>

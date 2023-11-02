@@ -49,20 +49,51 @@
         }
 
         /// <summary>
+        /// 피보나치
+        /// </summary>
+        public void fibonacci()
+        {
+            var fibonacciNumbers = new List<int> { 1, 1 };
+
+            while (fibonacciNumbers.Count < 20)
+            {
+                var previous = fibonacciNumbers[fibonacciNumbers.Count - 1];
+                var previous2 = fibonacciNumbers[fibonacciNumbers.Count - 2];
+
+                fibonacciNumbers.Add(previous + previous2);
+            }
+            foreach (var item in fibonacciNumbers)
+                Console.WriteLine(item);
+        }
+
+        /// <summary>
         /// n이 소수인지 판단
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        bool IsPrime(long n)
+        bool IsPrime(int n)
         {
-            if (n == 1)
+            if (n <= 1)
                 return false;
-            int target = (int)Math.Sqrt(n);
-            for (int i = 2; i <= target; i++)
+            if (n <= 3)
+                return true;
+            if (n % 2 == 0 || n % 3 == 0)
+                return false;
+
+            for (int i = 5; i * i <= n; i += 6)
             {
-                if (n % i == 0)
+                if (n % i == 0 || n % (i + 2) == 0)
                     return false;
             }
+
+            return true;
+        }
+
+        bool IsPrime2(int num)
+        {
+            for (int i = 2; i * i <= num; i++)
+                if (num % i == 0)
+                    return false;
             return true;
         }
 
@@ -86,21 +117,6 @@
             answer *= answer;
 
             return answer;
-        }
-
-        public void fibonacci()
-        {
-            var fibonacciNumbers = new List<int> { 1, 1 };
-
-            while (fibonacciNumbers.Count < 20)
-            {
-                var previous = fibonacciNumbers[fibonacciNumbers.Count - 1];
-                var previous2 = fibonacciNumbers[fibonacciNumbers.Count - 2];
-
-                fibonacciNumbers.Add(previous + previous2);
-            }
-            foreach (var item in fibonacciNumbers)
-                Console.WriteLine(item);
         }
     }
 }

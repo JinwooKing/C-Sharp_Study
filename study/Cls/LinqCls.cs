@@ -1,4 +1,6 @@
-﻿namespace ConsoleAppSample.Study.Cls
+﻿using DocumentFormat.OpenXml.Bibliography;
+
+namespace ConsoleAppSample.Study.Cls
 {
     public class LinqCls
     {
@@ -9,17 +11,11 @@
             //https://learn.microsoft.com/ko-kr/dotnet/api/system.linq
 
             int[] ints = Enumerable.Repeat(1, 10).ToArray();
+            
             int[] ints2 = Enumerable.Range(1, 10).ToArray();
-
             int x = 123456789;
             // Method Syntax
-
-            //temp는 각 자리수의 합
-            var temp = x.ToString().ToList().Select(y => int.Parse(y.ToString())).Sum();
-
-
-            IEnumerable<int> answer = ints.Where((x, i) => (i + 1) % 2 == 0); // 2배수 index만 return
-            temp = ints.OrderBy(x => x).OrderBy(x => Math.Abs(x - 5)).ToArray().First(); // 5와 가장 가까운 수
+     
             var groupedints = ints.GroupBy(i => i % 2);
             // Query Syntax
             //Linq Select
@@ -50,6 +46,31 @@
                 }
                 Console.WriteLine();
             }
+
+            int[] num_list = Enumerable.Range(1, 10).ToArray();
+            int tt = num_list.Length <= 10 ? num_list.Aggregate((a, b) => a * b) : num_list.Sum();
+            num_list.Except(new int[] { 1 }).Sum();
+
+            //temp는 각 자리수의 합
+            var temp = x.ToString().ToList().Select(y => int.Parse(y.ToString())).Sum();
+
+            IEnumerable<int> answer = ints.Where((x, i) => (i + 1) % 2 == 0); // 2배수 index만 return
+            temp = ints.OrderBy(x => x).OrderBy(x => Math.Abs(x - 5)).ToArray().First(); // 5와 가장 가까운 수
+            
+            var test = "안녕하세요. 박진우입니다.";
+            var result = test.Select(x =>
+            {
+                if (x == '박')
+                    return true;
+                else
+                    return false;
+            });
+
+            //var t = solution( new int[] { 0, 1, 2, 4, 3 }, new bool[] { true } );
+            //var nli = Enumerable.Range(1, 100);
+            //List<int> t = nli.OrderBy(x => x).ToList(); // 1 2 ... 100
+            //List<int> t1 = nli.OrderBy(x => -x).ToList(); // 100 99 ... 1
+            //List<int> t2 = nli.OrderBy(x => Math.Abs(x - 10)).ToList(); // 10 9 11 8 12 7 ... 100
         }
     }
 }

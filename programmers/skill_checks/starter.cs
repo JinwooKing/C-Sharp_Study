@@ -2,6 +2,18 @@
 {
     class starter
     {
+        //Console.Write(Convert.ToChar(48));
+        //0
+        //Console.Write(Convert.ToChar(97));
+        //a
+
+        long Getgcd(long a, long b)
+        {
+            if (a % b == 0)
+                return b;
+            return Getgcd(b, a % b);
+        }
+
         //프로그래머스 스킬체크 "입문자"
         //https://programmers.co.kr/skill_checks
         //1. n의 제곱근이 정수면 n+1^2 정수가 아니면 -1 리턴

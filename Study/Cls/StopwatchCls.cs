@@ -9,6 +9,9 @@ namespace ConsoleAppSample.Study.Cls
 {
     public class StopwatchCls
     {
+        //Stopwatch 클래스
+        //https://learn.microsoft.com/ko-kr/dotnet/api/system.diagnostics.stopwatch
+
         public static void Time(Action action)
         {
             var st = Stopwatch.StartNew();
@@ -19,7 +22,7 @@ namespace ConsoleAppSample.Study.Cls
         public static void Time(Func<int> function)
         {
             var st = Stopwatch.StartNew();
-            function();
+            int i = function();
             Console.WriteLine($"{function.Method.ToString()}: {st.Elapsed}");
         }
 

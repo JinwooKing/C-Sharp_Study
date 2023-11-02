@@ -16,6 +16,10 @@
             int[] ints3 = new int[] { 8, 2, 6, 3, 1, 5, 9, 7, 4 };
             int[] ints4 = new int[5] { 1, 2, 3, 4, 5 };
 
+            int[,] ints5 = new int[3, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+            ints5.GetLength(0); // 3
+            ints5.GetLength(1); // 2
+
             #region Array
             // Creates and initializes a new three-dimensional Array of type int.
             Array myArr = Array.CreateInstance(typeof(int), 2, 3, 4);//{int[2, 3, 4]}
@@ -79,13 +83,15 @@
             t.ToString().AsEnumerable().Reverse();
             var temp = from num in t.ToString() select Convert.ToInt16(t.ToString());
 
-
             char[] chars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', };
             chars.Reverse();
             ints.Max(); // 최대값
             ints.Sum(); // 모든합
             ints.Average(); // 평균
             ints.Reverse(); // 뒤집기
+            ints.Except(new int[] { 1, 2, 3 }).ToArray();
+            ints.OrderBy(x => x).Take(5).ToArray(); //오름차순
+            ints.OrderBy(x => -x).Take(5).ToArray(); //내림차순
 
             Array.IndexOf(ints, ints.Max()); // Array의 인덱스 찾기
 
@@ -95,6 +101,7 @@
             Array.IndexOf(tt, 1); // -1
             Array.IndexOf(tt, Convert.ToChar(1)); // -1
             Array.IndexOf(tt, Convert.ToChar(1.ToString())); // 0
+            Array.LastIndexOf(tt, "1");
 
             //Array의 최대값과 Index 구하기
             int[] answer = new int[2] { ints.Max(), Array.IndexOf(ints, ints.Max()) };
@@ -110,6 +117,14 @@
             string before = "apple";
             List<char> beflist = new List<char>(before.ToArray());
             beflist.Remove('p');
+
+            int[] arr1 = { 1, 2, 3, 4 };
+            int[] arr2 = { 5, 6, 7 };
+            int[] arr3 = arr1.Concat(arr2).ToArray(); //{ 1, 2, 3, 4, 5, 6, 7 };
+            int[] arr4 = arr1.Skip(2).ToArray(); //{ 3, 4 };
+
+            Array.Resize(ref arr1, arr1.Length + arr2.Length);
+            Array.Copy(arr2, 0, arr1, arr1.Length - arr2.Length, arr2.Length); //{ 1, 2, 3, 4, 5, 6, 7 };
         }
 
         /// <summary>
@@ -195,6 +210,11 @@
         {
             int answer = string.Join("", array).Count(x => x == '7');
             return answer;
+        }
+
+        public int[] solution(int[] num_list, int n)
+        {
+            return num_list.Skip(n - 1).ToArray();
         }
     }
 }

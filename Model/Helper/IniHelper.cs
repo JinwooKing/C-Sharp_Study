@@ -39,5 +39,18 @@ namespace ConsoleAppSample.Model.Helper
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
         [DllImport("kernel32")]
         private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
+
+        /// <summary>
+        /// ConfigEx.ini에서 section, key 값에 대한 정보를 가져옵니다.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetPrivateProfileString(string section, string key)
+        {
+            StringBuilder temp = new StringBuilder(32);
+            GetPrivateProfileString(section, key, "", temp, 32, filePath);
+            return temp.ToString();
+        }
     }
 }

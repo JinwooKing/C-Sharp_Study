@@ -1,7 +1,7 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Unicode;
+using System.Text.Json.Serialization;
 
 namespace ConsoleAppSample.Model.Helper
 {
@@ -14,10 +14,18 @@ namespace ConsoleAppSample.Model.Helper
             //1. 옵션 설정(JsonSerializerOptions)
             var options = new JsonSerializerOptions
             {
-                //Encoder : 문자 인코딩 사용자 지정
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                //WriteIndented : 사용자 가독성을 위해 JSON의 서식을 지정
-                WriteIndented = true
+                // Encoder: JSON 문자열 인코딩에 사용할 인코더를 설정합니다.
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                // WriteIndented: JSON을 들여쓰기하여 가독성을 높입니다.
+                WriteIndented = true,
+                // DefaultIgnoreCondition: null 값이 있는 속성을 직렬화할 때 무시하는 기본 동작을 설정합니다.
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                // MaxDepth: 직렬화할 수 있는 개체의 최대 깊이를 설정합니다. 너무 깊은 개체는 예외를 발생시킬 수 있습니다.
+                MaxDepth = 8,
+                // ReferenceHandler: 개체 참조를 유지하기 위해 참조 처리기를 설정합니다. 이렇게 하면 참조 루프가 발생할 수 있습니다.
+                ReferenceHandler = ReferenceHandler.Preserve,
+                // ReadCommentHandling: JSON 데이터에서 주석을 처리하는 방법을 설정합니다. 여기서는 주석을 건너뜁니다.
+                ReadCommentHandling = JsonCommentHandling.Skip
             };
 
             //2. 객체 생성

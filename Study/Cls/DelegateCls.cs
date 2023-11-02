@@ -15,6 +15,7 @@ namespace ConsoleAppSample.Study.Cls
             //하지만 Action과 Func의 차이점은 다음과 같습니다:
             //반환 유형(Return Type): Action은 반환 유형이 없는 메서드를 참조하는 대리자입니다.
             //반면, Func는 반환 유형이 있는 메서드를 참조하는 대리자입니다.
+            //https://learn.microsoft.com/ko-kr/dotnet/api/system.delegate
 
             Action<string> printMessage = (message) => Console.WriteLine(message);
             printMessage("Hello, World!");

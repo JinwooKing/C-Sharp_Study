@@ -37,7 +37,7 @@ namespace ConsoleAppSample.Model.Helper
                 string fileNameWithoutExtension = Path.Combine(directoryName, Path.GetFileNameWithoutExtension(path));
                 string extension = Path.GetExtension(path);
                 int suffix = 2;
-
+                
                 do
                 {
                     path = $"{fileNameWithoutExtension} ({suffix++}){extension}";
@@ -53,8 +53,9 @@ namespace ConsoleAppSample.Model.Helper
         /// <param name="dataList"></param>
         public static void WriteFile(List<TagInfo> dataList)
 		{
-			string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt";
-			string rootDir = Path.Combine(Consts.FILE_ROOT_PATH, fileName);
+			string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + Guid.NewGuid().ToString("N") + ".txt";
+            //매우빠른속도로 파일이 생성 상황에서 파일이름의 중복을 방지하기 위해 Guid.NewGuid().ToString("N") 추가
+            string rootDir = Path.Combine(Consts.FILE_ROOT_PATH, fileName);
 			string tempDir = Path.Combine(Consts.FILE_TEMP_PATH, fileName);
 			try
 			{
@@ -88,6 +89,45 @@ namespace ConsoleAppSample.Model.Helper
 				NlogHelper.Log(e.ToString(), LogType.Error);
 			}
 		}
+
+        public static void UpdateDateTime()
+        {
+            var di = new DirectoryInfo(@$"C:\Users\jinwo\Desktop\CAS_GatherDatas_Output\Output");
+            var dirs = di.GetDirectories();
+            foreach (var dir in dirs)
+            {
+                var tagName = string.Join(".", dir.Name.Split(".").Skip(2).ToArray());
+                var files = dir.GetFiles();
+
+                foreach (var file in files)
+                {
+
+                    var newdir = Path.Combine($@"C:\Users\jinwo\Desktop\CAS_GatherDatas_Output\Output", file.Name.Substring(0, 6));
+                    if (!Directory.Exists(newdir))
+                        Directory.CreateDirectory(newdir);
+
+                    using (var reader = new StreamReader(file.FullName))
+                    using (var writer = new StreamWriter(Path.Combine(newdir, string.Concat(file.Name[6..^4], "tagName.txt"))))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var splitedLine = line.Split(",");
+                            var datetimeStr = splitedLine[0];
+                            var datetime = new DateTime(int.Parse(datetimeStr[0..4]),
+                                int.Parse(datetimeStr[5..7]),
+                                int.Parse(datetimeStr[8..10]),
+                                int.Parse(datetimeStr[11..13]),
+                                int.Parse(datetimeStr[14..16]),
+                                int.Parse(datetimeStr[17..19]));
+                            writer.WriteLine(string.Concat(tagName, ",", datetime.AddMonths(2).AddDays(1).ToString("G"), ",", splitedLine[1]));
+                        }
+                    }
+
+                    //file.Delete();
+                }
+            }
+        }
 
 		public class TagInfo
 		{

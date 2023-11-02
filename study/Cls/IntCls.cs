@@ -27,6 +27,14 @@
             ushort _uint16 = ushort.Parse("65535");
             uint _uint32 = uint.Parse("4294967295");
             ulong _uint64 = ulong.Parse("18446744073709551615");
+
+            Console.WriteLine(int.IsEvenInteger(-2)); //True
+            Console.WriteLine(int.IsEvenInteger(-1)); //False
+            Console.WriteLine(int.IsEvenInteger(0)); //True
+            Console.WriteLine(int.IsEvenInteger(1)); //False
+            
+            //isEven 짝수인지
+            //isOdd 홀수인지
         }
     }
 }

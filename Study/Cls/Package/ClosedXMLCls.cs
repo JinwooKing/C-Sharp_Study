@@ -23,8 +23,9 @@ namespace ConsoleAppSample.Study.Cls.Package
 				var worksheet = workbook.Worksheets.Add("Sheet1");
 
 				// Header 셀 가져오기
+//Console.WriteLine();
 				var HeaderCellA1 = worksheet.Cell("A1");
-				var HeaderCellB1 = worksheet.Cell("B1");
+                var HeaderCellB1 = worksheet.Cell("B1");
 
 				// Header 셀 값 변경하기
 				HeaderCellA1.Value = "이름";

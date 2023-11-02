@@ -8,6 +8,9 @@ namespace ConsoleAppSample.Study.Cls
 {
     internal class KeyValuePairCls
     {
+        //KeyValuePair 클래스
+        //https://learn.microsoft.com/ko-kr/dotnet/api/system.collections.generic.keyvaluepair
+
         public KeyValuePairCls() {
             var kvp = new KeyValuePair<string, Action>[] {
             new KeyValuePair<string, Action>("TEST1", T1),

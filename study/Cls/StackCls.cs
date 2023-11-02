@@ -1,4 +1,6 @@
-﻿namespace ConsoleAppSample.Study.Cls
+﻿using DocumentFormat.OpenXml.Office.CustomUI;
+
+namespace ConsoleAppSample.Study.Cls
 {
     public class StackCls
     {
@@ -58,6 +60,10 @@
             //Stack<T>의 맨 위에 개체가 있는지 여부를 나타내는 값을 반환하고, 개체가 있는 경우 이를 result 매개 변수에 복사합니다. Stack<T>에서는 개체가 제거되지 않습니다.
             stack.TryPeek(out int num2);
 
+            //Queue
+            Queue<int> tt = new Queue<int>();
+            tt.Enqueue(num);
+            tt.Dequeue();
         }
         //Stack 예제
         public void StackClsExample()

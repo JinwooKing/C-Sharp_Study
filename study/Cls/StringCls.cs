@@ -15,6 +15,10 @@
             string st2 = new string(chars);
             string st3 = string.Concat(chars);
 
+            st2.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            st.StartsWith("123");
+            st.IndexOf("123");
+
             string.Join("", chars).Count(x => x == 5);
 
             char c1 = 'a'; // 'a' = 97 'A' = '65'
@@ -45,6 +49,7 @@
                 t.ToString();
             }
 
+            
 
             //사용자 지정 숫자 형식 문자열
             //https://learn.microsoft.com/ko-kr/dotnet/standard/base-types/custom-numeric-format-strings

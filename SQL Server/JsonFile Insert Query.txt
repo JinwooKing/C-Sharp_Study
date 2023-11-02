@@ -25,8 +25,8 @@ FROM OPENROWSET (BULK 'C:\product.txt', SINGLE_CLOB) as j
 -- 단일 값으로 전체 JSON 파일을 읽지 않고 파일 구문을 분석하여 행과 열에 반환
 --============================
 SELECT value
- FROM OPENROWSET (BULK 'C:\product.txt', SINGLE_CLOB) as j
- CROSS APPLY OPENJSON(BulkColumn)
+FROM OPENROWSET (BULK 'C:\product.txt', SINGLE_CLOB) as j
+CROSS APPLY OPENJSON(BulkColumn)
 
  --============================
 -- OPENROWSET(BULK) 

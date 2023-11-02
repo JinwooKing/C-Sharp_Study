@@ -134,5 +134,106 @@
 
             return answer;
         }
+
+        /// <summary>
+        /// n 길이만큼 "수박" 리턴
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        string solution7(int n)
+        {
+            return new String(new char[n / 2 + 1]).Replace("\0", "수박").Substring(0, n);
+        }
+
+        /// <summary>
+        /// 배열 원소별 곱해서 더하기
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        int solution8(int[] a, int[] b)
+        {
+            return a.Zip(b, (t1, t2) => t1 * t2).Sum();
+        }
+
+        /// <summary>
+        /// 3진법 뒤집기
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public int solution9(int n)
+        {
+            int answer = 0;
+            while (n > 0)
+            {
+                answer *= 3;
+                answer += n % 3;
+                n /= 3;
+            }
+            return answer;
+        }
+
+        /// <summary>
+        /// n번째 문자 순서대로 정렬(동일 문자 사전순)
+        /// </summary>
+        /// <param name="strings"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        string[] solution10(string[] strings, int n)
+        {
+            string[] answer = strings.OrderBy(o => o[n]).ThenBy(t => t).ToArray();
+            return answer;
+        }
+
+        /// <summary>
+        /// i, j 번째 배열 정렬하여 k인덱스 값 가져오기
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="commands"></param>
+        /// <returns></returns>
+        int[] solution11(int[] array, int[,] commands)
+        {
+            int length = commands.GetLength(0);
+            int[] answer = new int[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                int idx = commands[i, 0];
+                int jdx = commands[i, 1];
+                int kdx = commands[i, 2];
+
+                var arr = array.Skip(idx - 1).Take(jdx - idx + 1);
+                answer[i] = arr.OrderBy(x => x).ToArray()[kdx];
+            }
+            return answer;
+        }
+
+        /// <summary>
+        /// 개인정보 수집 유효기간
+        /// </summary>
+        /// <param name="today"></param>
+        /// <param name="terms"></param>
+        /// <param name="privacies"></param>
+        /// <returns></returns>
+        int[] solution12(string today, string[] terms, string[] privacies)
+        {
+            Queue<int> answer = new Queue<int>();
+            DateTime t = new DateTime(int.Parse(today.Substring(0, 4)), int.Parse(today.Substring(5, 2)), int.Parse(today.Substring(8, 2)));
+            Dictionary<string, int> dic = terms.ToDictionary(x => x.Substring(0, 1), y => int.Parse(y.Split(' ')[1]));
+
+            for (int i = 0; i < privacies.Length; i++)
+            {
+                var temp = privacies[i].Split(' ');
+                string target = temp[0];
+                string type = temp[1];
+
+                DateTime u = new DateTime(int.Parse(target.Substring(0, 4)), int.Parse(target.Substring(5, 2)), int.Parse(target.Substring(8, 2)));
+                u = u.AddMonths(dic[type]);
+                if (DateTime.Compare(t, u) > 0)
+                    answer.Enqueue(i + 1);
+            }
+
+            return answer.ToArray();
+        }
     }
 }
