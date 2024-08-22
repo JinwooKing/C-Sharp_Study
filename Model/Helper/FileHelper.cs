@@ -1,5 +1,5 @@
 ﻿using ConsoleAppSample.Utilities;
-using DocumentFormat.OpenXml.Spreadsheet;
+using static ConsoleAppSample.Model.Helper.NlogHelper;
 
 namespace ConsoleAppSample.Model.Helper
 {

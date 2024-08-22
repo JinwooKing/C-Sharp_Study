@@ -5,84 +5,55 @@ using System.Text.Json.Serialization;
 
 namespace ConsoleAppSample.Model.Helper
 {
-    public class JsonHelper
+    /// <summary>
+    /// 변환할 클래스가 있으면 <T> 없으면 JsonNode 사용
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class JsonHelper<T>
     {
-        //System.Text.Json 네임스페이스
-        //https://learn.microsoft.com/ko-kr/dotnet/api/system.text.json
-        public JsonHelper()
+        //옵션
+        private JsonSerializerOptions options = new JsonSerializerOptions
         {
-            //1. 옵션 설정(JsonSerializerOptions)
-            var options = new JsonSerializerOptions
-            {
-                // Encoder: JSON 문자열 인코딩에 사용할 인코더를 설정합니다.
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                // WriteIndented: JSON을 들여쓰기하여 가독성을 높입니다.
-                WriteIndented = true,
-                // DefaultIgnoreCondition: null 값이 있는 속성을 직렬화할 때 무시하는 기본 동작을 설정합니다.
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                // MaxDepth: 직렬화할 수 있는 개체의 최대 깊이를 설정합니다. 너무 깊은 개체는 예외를 발생시킬 수 있습니다.
-                MaxDepth = 8,
-                // ReferenceHandler: 개체 참조를 유지하기 위해 참조 처리기를 설정합니다. 이렇게 하면 참조 루프가 발생할 수 있습니다.
-                ReferenceHandler = ReferenceHandler.Preserve,
-                // ReadCommentHandling: JSON 데이터에서 주석을 처리하는 방법을 설정합니다. 여기서는 주석을 건너뜁니다.
-                ReadCommentHandling = JsonCommentHandling.Skip
-            };
+            // Encoder: JSON 문자열 인코딩에 사용할 인코더를 설정합니다.
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            // WriteIndented: JSON을 들여쓰기하여 가독성을 높입니다.
+            WriteIndented = true,
+            // DefaultIgnoreCondition: null 값이 있는 속성을 직렬화할 때 무시하는 기본 동작을 설정합니다.
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            // MaxDepth: 직렬화할 수 있는 개체의 최대 깊이를 설정합니다. 너무 깊은 개체는 예외를 발생시킬 수 있습니다.
+            MaxDepth = 8,
+            // ReferenceHandler: 개체 참조를 유지하기 위해 참조 처리기를 설정합니다. 이렇게 하면 참조 루프가 발생할 수 있습니다.
+            ReferenceHandler = ReferenceHandler.Preserve,
+            // ReadCommentHandling: JSON 데이터에서 주석을 처리하는 방법을 설정합니다. 여기서는 주석을 건너뜁니다.
+            ReadCommentHandling = JsonCommentHandling.Skip
+        };
+        public JsonSerializerOptions GetOption() => options;
 
-            //2. 객체 생성
-            Person person = new Person()
-            {
-                Name = "박진우",
-                Age = DateTime.Now.Year - 1994,
-                Nickname = new string[] { "원빈", "장동건", "현빈" },
-                Favoritefood = new List<string>() { "소고기", "돼지고기", "닭고기" },
-                Birthday = DateTime.Parse("1994-08-09"),
-                Employed = true
-            };
+        /// <summary>
+        /// 직렬화(객체를 JsonString으로)
+        /// option = true, 들여쓰기 등등
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        public string Serialize(T value, bool option = true) => option ? JsonSerializer.Serialize(value, options) : JsonSerializer.Serialize(value);
 
-            //3. 직렬화(객체를 JSON으로)
-            string jsonString = JsonSerializer.Serialize(person, options);
-            Console.WriteLine(jsonString);
+        /// <summary>
+        /// 역직렬화(JsonString을 객체로)
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
+        public T Deserialize(string jsonString) => JsonSerializer.Deserialize<T>(jsonString, options);
 
-            jsonString = @"
-            {
-              ""Name"": ""박진우"",
-              ""Age"": 28,
-              ""Nickname"": [
-                ""원빈"",
-                ""장동건"",
-                ""현빈""
-              ],
-              ""Favoritefood"": [
-                ""소고기"",
-                ""돼지고기"",
-                ""닭고기""
-              ],
-              ""Birthday"": ""1994-08-09T00:00:00+09:00"",
-              ""Employed"": true
-            }
-            
-            ";
-
-            //4. 역직렬화(JSON을 객체로)
-            Person Person = JsonSerializer.Deserialize<Person>(jsonString);
-            Console.WriteLine(Person.Name);
-            Console.WriteLine(Person.Age);
-            Console.WriteLine(Person.Nickname);
-            Console.WriteLine(Person.Favoritefood);
-            Console.WriteLine(Person.Birthday);
-            Console.WriteLine(Person.Employed);
-
-            //5. JsonNode (역직렬화할 클래스가 없는 경우)
-            JsonNode jsonNode = JsonNode.Parse(jsonString);
-            Console.WriteLine(jsonNode.ToJsonString(options));
-            Console.WriteLine(jsonNode["Name"]);
-            Console.WriteLine(jsonNode["Age"]);
-            Console.WriteLine(jsonNode["Nickname"]);
-            Console.WriteLine(jsonNode["Favoritefood"].ToJsonString(options));
-            Console.WriteLine(jsonNode["Birthday"]);
-            Console.WriteLine(jsonNode["Employed"]);
-
-        }
+        /// <summary>
+        /// JsonNode 역직렬화 (역직렬화할 클래스가 없는 경우)
+        /// jsonNode.ToJsonString(options); // 문자열 전체
+        /// jsonNode["prop"]; // 값
+        /// jsonNode["Array"].ToJsonString(options); // 배열
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
+        public JsonNode JsonNodeDeserialize(string jsonString) => JsonNode.Parse(jsonString);
 
         /// <summary>
         /// JSON 파일을 읽고, JsonDocument에 데이터를 로드하고, 서식 있는(보기 좋게 출력된) JSON을 파일에 씁니다.
@@ -142,20 +113,6 @@ namespace ConsoleAppSample.Model.Helper
             }
 
             writer.Flush();
-        }
-    }
-
-    public class Person
-    {
-        public string? Name { get; set; }
-        public int Age { get; set; }
-        public string[]? Nickname { get; set; }
-        public List<string>? Favoritefood { get; set; }
-        public DateTimeOffset Birthday { get; set; }
-        public bool Employed { get; set; }
-        public int Add(int a, int b)
-        {
-            return a + b;
         }
     }
 }

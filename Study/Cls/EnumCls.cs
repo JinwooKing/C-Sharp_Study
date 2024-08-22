@@ -19,7 +19,6 @@ namespace ConsoleAppSample.Study.Cls
 
         EnumCls()
         {
-
             Type weekdays = typeof(Days);
             Days monday = Days.Monday;
             Days Tuesday = (Days) 3;

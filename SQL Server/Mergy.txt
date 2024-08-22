@@ -1,0 +1,83 @@
+--============================
+-- MERGE
+--============================
+MERGE 문은 원본 테이블과의 조인 결과에서 대상 테이블에 대한 삽입, 업데이트 또는 삭제 작업을 실행합니다. 
+예를 들어 원본 테이블과의 차이점에 따라 대상 테이블에서 행을 삽입, 업데이트 및 삭제하여 두 테이블을 동기화합니다.
+
+INSERT tbl_A (col, col2)
+SELECT col, col2
+FROM tbl_B
+WHERE NOT EXISTS (SELECT col FROM tbl_A A2 WHERE A2.col = tbl_B.col);
+
+--============================
+-- MERGE 문을 사용한 데이터 병합
+--============================
+1. 기본 MERGE 문 (두 테이블 간의 데이터를 업데이트하거나 삽입)
+MERGE TargetTable AS target
+USING SourceTable AS source
+ON target.ID = source.ID
+WHEN MATCHED THEN
+    UPDATE SET target.Name = source.Name, target.Age = source.Age
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (ID, Name, Age) VALUES (source.ID, source.Name, source.Age)
+WHEN NOT MATCHED BY SOURCE THEN
+    DELETE;
+
+2. MERGE 문을 사용한 삽입(기존 데이터는 업데이트하지 않고, 존재하지 않는 데이터만 삽입)
+MERGE TargetTable AS target
+USING SourceTable AS source
+ON target.ID = source.ID
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (ID, Name, Age) VALUES (source.ID, source.Name, source.Age);
+
+3. MERGE 문을 사용한 업데이트(기존 데이터만 업데이트하고, 새로운 데이터는 삽입하지 않는다)
+MERGE TargetTable AS target
+USING SourceTable AS source
+ON target.ID = source.ID
+WHEN MATCHED THEN
+    UPDATE SET target.Name = source.Name, target.Age = source.Age;
+
+4. MERGE 문을 사용한 조건부 업데이트 및 삽입(특정 조건을 만족하는 경우에만 업데이트하고, 그렇지 않은 경우 삽입)
+MERGE TargetTable AS target
+USING SourceTable AS source
+ON target.ID = source.ID
+WHEN MATCHED AND target.Age <> source.Age THEN
+    UPDATE SET target.Name = source.Name, target.Age = source.Age
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (ID, Name, Age) VALUES (source.ID, source.Name, source.Age);
+
+5. MERGE 문을 사용한 조인(두 테이블 간의 조인을 통해 데이터를 병합)
+-- 추가적인 테이블 생성 및 데이터 삽입
+CREATE TABLE Department (
+    DeptID INT PRIMARY KEY,
+    DeptName NVARCHAR(50)
+);
+
+INSERT INTO Department (DeptID, DeptName) VALUES
+(1, 'HR'),
+(2, 'IT'),
+(3, 'Finance');
+
+-- TargetTable에 DeptID 컬럼 추가
+ALTER TABLE TargetTable ADD DeptID INT;
+
+-- SourceTable에 DeptID 컬럼 추가 및 데이터 업데이트
+ALTER TABLE SourceTable ADD DeptID INT;
+UPDATE SourceTable SET DeptID = 1 WHERE ID = 1;
+UPDATE SourceTable SET DeptID = 2 WHERE ID = 2;
+UPDATE SourceTable SET DeptID = 3 WHERE ID = 3;
+
+-- MERGE 문을 사용한 조인 및 데이터 병합
+MERGE TargetTable AS target
+USING (
+    SELECT s.ID, s.Name, s.Age, d.DeptName
+    FROM SourceTable s
+    JOIN Department d ON s.DeptID = d.DeptID
+) AS source
+ON target.ID = source.ID
+WHEN MATCHED THEN
+    UPDATE SET target.Name = source.Name, target.Age = source.Age, target.DeptID = source.DeptName
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (ID, Name, Age, DeptID) VALUES (source.ID, source.Name, source.Age, source.DeptName)
+WHEN NOT MATCHED BY SOURCE THEN
+    DELETE;

@@ -10,9 +10,18 @@ namespace ConsoleAppSample.Model.Helper
         {
             OracleConnectionTest();
             SqlServerConnectionTest();
+
+            #region LocalDB 접속 
+            string connectionString = $@"Server=(localdb)\mssqllocaldb;Database=aspnet-AlarmEvent-94b1bc1f-2098-47d8-9acf-efacf00135f3;Trusted_Connection=True;MultipleActiveResultSets=true;";
+            var conn = new SqlConnection(connectionString);
+            conn.Open();
+
+            string? version = conn.Query<string>("SELECT @@VERSION").FirstOrDefault();
+            Console.WriteLine(version);
+            #endregion
         }
-        
-		private static string SERVER = "000.000.000.000";
+
+        private static string SERVER = "000.000.000.000";
 		private static string UID = "sa";
 		private static string PWD = "000000";
 		private static string DATABASE = "AdventureWorksLT2019";
