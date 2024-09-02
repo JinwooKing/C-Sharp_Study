@@ -1,0 +1,14 @@
+--============================
+-- 과거 데이터 삭제
+--============================
+		DELETE
+		FROM AUDIT_DATA
+		WHERE occurDt IN (
+		SELECT occurDt
+		FROM (
+			SELECT 	occurDt, 
+			ROW_NUMBER() OVER(ORDER BY occurDt asc) AS rnum 
+			FROM AUDIT_DATA 
+			) ma
+		rnum <= 10000
+		);		
